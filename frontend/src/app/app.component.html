@@ -1,0 +1,26 @@
+<div class="app-container">
+  <nav class="navbar" *ngIf="isLoggedIn">
+    <div class="nav-brand">
+  <img src="assets/expenselogo.png" alt="Expense Logo" class="expense-logo" />
+  <h2>My Expense Tracker</h2>
+</div>
+    <ul class="nav-links">
+      <li><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
+      <li><a routerLink="/expenses" routerLinkActive="active">Expenses</a></li>
+      <li><a routerLink="/add-expense" routerLinkActive="active">Add Expense</a></li>
+      <li><a routerLink="/analytics" routerLinkActive="active">Analytics</a></li>
+    </ul>
+    <div class="nav-user">
+      <span class="user-name">👤 {{ currentUser?.name }}</span>
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2024 Expense Tracker by Revanth Vangapandu</p>
+  </footer>
+</div>

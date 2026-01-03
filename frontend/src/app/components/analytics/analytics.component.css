@@ -1,0 +1,116 @@
+.analytics-container {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.analytics-container h1 {
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #999;
+}
+
+.chart-section {
+  margin-top: 3rem;
+}
+
+.chart-section h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #667eea;
+}
+
+.category-chart {
+  margin-top: 1rem;
+}
+
+.category-bar-item {
+  margin-bottom: 1.5rem;
+}
+
+.category-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.category-name {
+  color: #333;
+}
+
+.category-value {
+  color: #667eea;
+}
+
+.progress-bar {
+  height: 30px;
+  background: #f0f0f0;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  transition: width 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 0.5rem;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.month-chart {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.month-item {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  border-left: 4px solid #667eea;
+}
+
+.month-name {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.month-amount {
+  color: #667eea;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .month-chart {
+    grid-template-columns: 1fr;
+  }
+}

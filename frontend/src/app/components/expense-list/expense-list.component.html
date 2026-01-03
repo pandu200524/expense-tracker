@@ -1,0 +1,54 @@
+<div class="expense-list-container">
+  <div class="header">
+    <h1>My Expenses</h1>
+    <button routerLink="/add-expense" class="btn-primary">+ Add Expense</button>
+  </div>
+
+  <div class="filters">
+    <input 
+      type="text" 
+      [(ngModel)]="searchTerm" 
+      (ngModelChange)="filterExpenses()"
+      placeholder="Search expenses..."
+      class="search-input">
+    
+    <select 
+      [(ngModel)]="selectedCategory" 
+      (ngModelChange)="filterExpenses()"
+      class="category-filter">
+      <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+    </select>
+  </div>
+
+  <div *ngIf="loading" class="loading">Loading expenses...</div>
+
+  <div *ngIf="!loading && filteredExpenses.length === 0" class="no-expenses">
+    <p>No expenses found. Start by adding your first expense!</p>
+  </div>
+
+  <div *ngIf="!loading && filteredExpenses.length > 0" class="expense-summary">
+    <h3>Total: ₹{{ getTotalAmount() | number:'1.2-2' }}</h3>
+    <p>{{ filteredExpenses.length }} transaction(s)</p>
+  </div>
+
+  <div *ngIf="!loading && filteredExpenses.length > 0" class="expense-grid">
+    <div *ngFor="let expense of filteredExpenses" class="expense-card">
+      <div class="expense-header">
+        <h3>{{ expense.title }}</h3>
+        <span class="category-badge">{{ expense.category }}</span>
+      </div>
+      
+      <div class="expense-amount">₹{{ expense.amount | number:'1.2-2' }}</div>
+      
+      <div class="expense-details">
+        <p><strong>Date:</strong> {{ expense.date | date:'mediumDate' }}</p>
+        <p><strong>Payment:</strong> {{ expense.paymentMethod }}</p>
+        <p *ngIf="expense.description"><strong>Note:</strong> {{ expense.description }}</p>
+      </div>
+      
+      <div class="expense-actions">
+        <button (click)="deleteExpense(expense._id)" class="btn-delete">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

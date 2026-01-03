@@ -1,0 +1,39 @@
+<div class="dashboard-container">
+  <h1>Dashboard</h1>
+
+  <div *ngIf="loading" class="loading">Loading...</div>
+
+  <div *ngIf="!loading && analytics" class="analytics-grid">
+    <div class="card">
+      <h3>Total Expenses</h3>
+      <p class="amount">₹{{ analytics.total | number:'1.2-2' }}</p>
+    </div>
+
+    <div class="card">
+      <h3>Total Transactions</h3>
+      <p class="count">{{ analytics.count }}</p>
+    </div>
+
+    <div class="card">
+      <h3>Average Per Transaction</h3>
+      <p class="average">₹{{ analytics.count > 0 ? (analytics.total / analytics.count) : 0 | number:'1.2-2' }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && analytics" class="category-breakdown">
+    <h2>Spending by Category</h2>
+    <div class="category-list">
+      <div *ngFor="let category of getCategoryKeys()" class="category-item">
+        <div class="category-info">
+          <span class="category-name">{{ category }}</span>
+          <span class="category-amount">₹{{ getCategoryValue(category) | number:'1.2-2' }}</span>
+        </div>
+        <div class="category-bar">
+          <div class="category-fill" 
+               [style.width.%]="(getCategoryValue(category) / analytics!.total) * 100">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

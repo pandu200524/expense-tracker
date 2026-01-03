@@ -1,0 +1,49 @@
+<div class="analytics-container">
+  <h1>Financial Analytics</h1>
+
+  <div *ngIf="loading" class="loading">Loading analytics...</div>
+
+  <div *ngIf="!loading && analytics">
+    <div class="analytics-grid">
+      <div class="card">
+        <h3>Total Spending</h3>
+        <p class="amount">₹{{ analytics.total | number:'1.2-2' }}</p>
+      </div>
+
+      <div class="card">
+        <h3>Total Transactions</h3>
+        <p class="count">{{ analytics.count }}</p>
+      </div>
+
+      <div class="card">
+        <h3>Average Expense</h3>
+        <p class="average">₹{{ analytics.count > 0 ? (analytics.total / analytics.count) : 0 | number:'1.2-2' }}</p>
+      </div>
+    </div>
+
+    <div class="chart-section">
+      <h2>Spending by Category</h2>
+      <div class="category-chart">
+        <div *ngFor="let item of getCategoryEntries()" class="category-bar-item">
+          <div class="category-label">
+            <span class="category-name">{{ item.category }}</span>
+            <span class="category-value">₹{{ item.amount | number:'1.2-2' }} ({{ item.percentage | number:'1.1-1' }}%)</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="item.percentage"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-section">
+      <h2>Monthly Spending</h2>
+      <div class="month-chart">
+        <div *ngFor="let item of getMonthEntries()" class="month-item">
+          <span class="month-name">{{ item.month }}</span>
+          <span class="month-amount">₹{{ item.amount | number:'1.2-2' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
