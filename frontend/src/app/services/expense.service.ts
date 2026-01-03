@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 export interface Expense {
   _id?: string;
@@ -23,12 +24,9 @@ export interface Analytics {
   providedIn: 'root'
 })
 export class ExpenseService {
-  // UPDATE THIS URL WITH YOUR RENDER BACKEND URL
-  private apiUrl = 'https://expense-tracker-api-61dt.onrender.com/api/expenses';
-  
-  // Example: private apiUrl = 'https://expense-tracker-api-xxxx.onrender.com/api/expenses';
+  private apiUrl = `${environment.apiUrl}/api/expenses`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getAllExpenses(): Observable<Expense[]> {
     return this.http.get<Expense[]>(this.apiUrl);

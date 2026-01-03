@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 export interface User {
   id: string;
@@ -19,28 +20,25 @@ export interface AuthResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  // FIXED: Updated to use your Render backend URL
-  private apiUrl = 'https://expense-tracker-api-61dt.onrender.com/api/auth';
+  private apiUrl = `${environment.apiUrl}/api/auth`;
+
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient) {
-    // Check if user is already logged in on service initialization
     this.loadUserFromToken();
   }
 
   signup(name: string, email: string, password: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/signup`, { name, email, password })
-      .pipe(
-        tap(response => this.handleAuthResponse(response))
-      );
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}/signup`, { name, email, password })
+      .pipe(tap(res => this.handleAuthResponse(res)));
   }
 
   login(email: string, password: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, { email, password })
-      .pipe(
-        tap(response => this.handleAuthResponse(response))
-      );
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}/login`, { email, password })
+      .pipe(tap(res => this.handleAuthResponse(res)));
   }
 
   logout(): void {
@@ -70,12 +68,11 @@ export class AuthService {
   private loadUserFromToken(): void {
     const token = this.getToken();
     const userStr = localStorage.getItem('user');
-    
+
     if (token && userStr) {
       try {
-        const user = JSON.parse(userStr);
-        this.currentUserSubject.next(user);
-      } catch (e) {
+        this.currentUserSubject.next(JSON.parse(userStr));
+      } catch {
         this.logout();
       }
     }
